@@ -1,20 +1,23 @@
 <script setup lang="ts">
-import  { ref } from 'vue'
 import  { type EventItem } from '@/type';
-import EventService from '@/services/EventService';
+import type { ref, PropType } from 'vue'
+import EventService from '@/services/EventService'
 
-const event = ref<EventItem | null>(null)
 
-const props = defineProps({
-    id: String
+
+defineProps({
+    event: {
+        type: Object as PropType<EventItem>,
+        require: true
+    }
 })
 
 
-EventService.getEventById(Number(props.id)).then((response) => {
-    event.value = response.data
-}).catch(error => {
-    console.log(error)
-})
+// EventService.getEventById(Number(props.id)).then((response) => {
+//     event.value = response.data
+// }).catch(error => {
+//     console.log(error)
+// })
 
 </script>
 
@@ -22,11 +25,11 @@ EventService.getEventById(Number(props.id)).then((response) => {
     <div>
         <div v-if="event">
             <h1>{{ event.title }}</h1>
-            <div id="nav">
+            <!-- <div id="nav">
                 <RouterLink :to="{ name: 'event-detail', params: { id } }">Details</RouterLink>
                 <RouterLink :to="{ name: 'event-register', params: { id } }">Register</RouterLink>
                 <RouterLink :to="{ name: 'event-edit', params: { id } }">Edit</RouterLink>
-            </div>
+            </div> -->
             <p>{{ event.time }} on {{ event.date }} @ {{ event.location }}</p>
             <p>{{ event.description }}</p>
         </div>
